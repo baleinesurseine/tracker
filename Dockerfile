@@ -17,4 +17,5 @@ COPY . /usr/src/app
 USER tracker
 
 EXPOSE 6000
+
 CMD [ "node", "server.js" ]
