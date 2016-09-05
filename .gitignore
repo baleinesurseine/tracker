@@ -1,0 +1,27 @@
+.DS_Store
+
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+
+pids
+logs
+results
+tmp
+coverage
+dump
+
+# API keys
+.env
+
+# Dependency directory
+node_modules
+bower_components
+
+Thumbs.db
