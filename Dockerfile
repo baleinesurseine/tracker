@@ -4,7 +4,7 @@ MAINTAINER Edouard Fischer <edouard.fischer@gmail.com>
 RUN groupadd -r tracker && useradd -r -g tracker tracker
 
 # Create app directory
-RUN mkdir -p /usr/src/app && chown -R tracker:tracker/usr/src/app
+RUN mkdir -p /usr/src/app && chown -R tracker:tracker /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
