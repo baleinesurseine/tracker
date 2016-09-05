@@ -4,6 +4,7 @@ var compression = require('compression')
 var methodOverride = require('method-override')
 var bodyParser = require('body-parser')
 var uaparser = require('ua-parser')
+var redis = require('redis')
 
 var helmet = require('helmet')
 
@@ -16,6 +17,8 @@ app.use(compression())
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+var client = redis.createClient(6379, 'redis')
 
 app.use(methodOverride('_method'))
 
@@ -35,6 +38,8 @@ router.get('/', function (req, res, next) {
     console.log('browser: ' + ua.ua.toString())
     console.log('OS: ' + ua.os.toString())
     console.log('device: ' + ua.device.toString())
+
+    client.hmset('tracks', 'ip', ip, 'browser', ua.ua.toString(), 'OS', ua.os.toString(), 'device', ua.device.toString())
   })
   return res.status(204).send()
 })
