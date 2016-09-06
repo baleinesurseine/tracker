@@ -1,7 +1,7 @@
 function TimeSeries(client, namespace) {
   this.namespace = namespace
   this.client = client
-  this units = {
+  this.units = {
     second: 1,
     minute: 60,
     hour: 60 * 60,

@@ -23,7 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 var client = redis.createClient(6379, 'redis')
 
-var timeSeries = require('./TimeSeries')(client, 'tracker')
+var TimeSeries = require('./TimeSeries')
+var timeSeries = new TimeSeries.TimeSeries(client, 'tracker')
 
 app.use(methodOverride('_method'))
 
