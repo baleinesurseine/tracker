@@ -8,6 +8,9 @@ var redis = require('redis')
 
 var helmet = require('helmet')
 
+
+
+
 var app = express()
 app.use(helmet())
 app.use(helmet.hidePoweredBy())
@@ -19,6 +22,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 var client = redis.createClient(6379, 'redis')
+
+var timeSeries = require('./TimeSeries')(client, 'tracker')
 
 app.use(methodOverride('_method'))
 
@@ -38,6 +43,8 @@ router.get('/', function (req, res, next) {
     console.log('browser: ' + ua.ua.toString())
     console.log('OS: ' + ua.os.toString())
     console.log('device: ' + ua.device.toString())
+
+    timeSeries.insert(Date.now() / 1000 | 0, ip)
 
     client.hmset('tracks', 'ip', ip, 'browser', ua.ua.toString(), 'OS', ua.os.toString(), 'device', ua.device.toString())
   })
