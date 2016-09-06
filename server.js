@@ -46,8 +46,8 @@ router.get('/', function (req, res, next) {
     console.log('device: ' + ua.device.toString())
 
     timeSeries.insert(Date.now() / 1000 | 0, ip)
+    timeSeries.insert(Date.now() / 1000 | 0, device)
 
-    client.hmset('tracks', 'ip', ip, 'browser', ua.ua.toString(), 'OS', ua.os.toString(), 'device', ua.device.toString())
   })
   return res.status(204).send()
 })
