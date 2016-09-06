@@ -8,9 +8,6 @@ var redis = require('redis')
 
 var helmet = require('helmet')
 
-
-
-
 var app = express()
 app.use(helmet())
 app.use(helmet.hidePoweredBy())
@@ -46,8 +43,7 @@ router.get('/', function (req, res, next) {
     console.log('device: ' + ua.device.toString())
 
     timeSeries.insert(Date.now() / 1000 | 0, ip)
-    timeSeries.insert(Date.now() / 1000 | 0, device)
-
+    timeSeries.insert(Date.now() / 1000 | 0, ua.device.toString())
   })
   return res.status(204).send()
 })
