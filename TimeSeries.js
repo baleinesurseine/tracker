@@ -11,7 +11,7 @@ function TimeSeries(client, namespace) {
     '1sec' : { name: '1sec', ttl: this.units.hour * 2, duration: this.units.second, quantity: this.units.minute * 5 },
     '1min' : { name: '1min', ttl: this.units.day * 7, duration: this.units.minute, quantity: this.units.hour * 8 },
     '1hour' : { name: '1hour', ttl: this.units.day * 60, duration: this.units.hour, quantity: this.units.day * 10 },
-    '1day': { name: '1day', ttl: null, duration: this.units.day, this.units.day * 30 }
+    '1day': { name: '1day', ttl: null, duration: this.units.day, quantity: this.units.day * 30 }
   }
 }
 TimeSeries.prototype.insert = function(timeStampInSeconds, id) {
