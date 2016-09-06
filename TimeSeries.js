@@ -35,4 +35,26 @@ TimeSeries.prototype._getRoundedTimeStamp = function (timeStampInSeconds, precis
   return Math.floor(timeStampInSeconds / precision) * precision
 }
 
+TimeSeries.prototype.fetch = function (granularityName, beginTimestamp, endTimestamp, callback) {
+  var granularity = this.granularities[granularityName]
+  var begin = this._getRoundedTimestamp(beginTimestamp, granularity.duration)
+  var end = this._getRoundedTimestamp(endTimestamp, granularity.duration)
+  var multi = this.client.multi()
+  for (var timestamp = begin; timestamp <= end; timestamp += granularity.duration) {
+    var key = this._getKeyName(granularity, timestamp)
+    var fieldName = this._getRoundedTimestamp(timestamp, granularity.duration)
+    multi.hget(key, fieldName)
+  }
+  multi.exec(function (err, replies) {
+    if (err) { callback(err, null) }
+    var results = []
+    for (var i = 0; i < replies.length; i++) {
+      var timestamp = beginTimestamp + i * granularity.duration
+      var value = parseInt(replies[i], 10) || 0
+      results.push({timestamp: timestamp, value: value})
+    }
+    callback(null, results)
+  })
+}
+
 exports.TimeSeries = TimeSeries
