@@ -46,7 +46,7 @@ router.get('/', function (req, res, next) {
     console.log('device: ' + ua.device.toString())
 
     var city = cityLookup.get(ip)
-    console.log('city: ' + city)
+    console.log('city: ' + JSON.stringify(city))
 
     timeSeries.insert(Date.now() / 1000 | 0, ip)
     timeSeries.insert(Date.now() / 1000 | 0, ua.device.toString())
