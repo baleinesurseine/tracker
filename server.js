@@ -5,6 +5,9 @@ var methodOverride = require('method-override')
 var bodyParser = require('body-parser')
 var uaparser = require('ua-parser')
 var redis = require('redis')
+var maxmind = require('maxmind')
+
+var cityLookup = maxmind.open('/usr/src/geoip/GeoLite2-City.mmdb')
 
 var helmet = require('helmet')
 
@@ -41,6 +44,9 @@ router.get('/', function (req, res, next) {
     console.log('browser: ' + ua.ua.toString())
     console.log('OS: ' + ua.os.toString())
     console.log('device: ' + ua.device.toString())
+
+    var city = cityLookup.get(ip)
+    console.log('city: ' + city)
 
     timeSeries.insert(Date.now() / 1000 | 0, ip)
     timeSeries.insert(Date.now() / 1000 | 0, ua.device.toString())

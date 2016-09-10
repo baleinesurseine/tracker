@@ -1,9 +1,7 @@
-#FROM node:6
 FROM mhart/alpine-node:6
 
 MAINTAINER Edouard Fischer <edouard.fischer@gmail.com>
 
-#RUN groupadd -r tracker && useradd -r -g tracker tracker
 RUN addgroup tracker && adduser -D -H -G tracker tracker
 
 # Create app directory
