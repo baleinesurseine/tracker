@@ -38,6 +38,7 @@ router.get('/', function (req, res, next) {
     var token = qu && qu.token
     var ip = req && req.headers['x-real-ip'] || req.headers['X-Real-IP'] || req.connection.remoteAddress
     var ua = req && uaparser.parse(req.headers['user-agent'])
+    console.log('date: ' + Date.now())
     console.log('query: ' + JSON.stringify(qu))
     console.log('token: ' + token)
     console.log('ip: ' + ip)
